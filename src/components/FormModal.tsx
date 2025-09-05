@@ -17,38 +17,60 @@ const FormModal: React.FC<FormModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md transition-opacity duration-300 ${
-        isOpen ? "opacity-100" : "opacity-0"
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm transition-opacity duration-300 ${
+        isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="modal-title"
+      aria-describedby="modal-description"
     >
       <div
-        className={`bg-gray-950 rounded-3xl p-4 md:p-8 max-w-5xl w-full relative shadow-2xl shadow-green-800/70 transform transition-transform duration-300 ${
+        className={`bg-gradient-to-tr from-gray-900 via-gray-800 to-gray-900 rounded-2xl p-6 sm:p-8 max-w-3xl w-full mx-4 sm:mx-0 relative shadow-2xl shadow-green-700/60 transform transition-transform duration-300 ${
           isOpen ? "scale-100" : "scale-95"
         }`}
       >
         {/* Botão fechar */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 bg-red-600 text-white px-3 py-1 rounded-full hover:bg-red-700 transition shadow-lg"
+          aria-label="Fechar modal"
+          className="absolute top-4 right-4 bg-red-600 hover:bg-red-700 text-white rounded-full w-9 h-9 flex items-center justify-center shadow-lg transition focus:outline-none focus:ring-2 focus:ring-red-500"
         >
-          X
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
         </button>
 
-        <h2 className="text-3xl font-extrabold mb-6 text-center text-green-400 tracking-wider drop-shadow-lg animate-pulse">
+        <h2
+          id="modal-title"
+          className="text-3xl sm:text-4xl font-extrabold mb-6 text-center text-green-400 tracking-wide drop-shadow-lg animate-pulse select-none"
+        >
           Formulário de Inscrição
         </h2>
 
         {/* Iframe do Google Form */}
-        <div className="w-full">
+        <div
+          id="modal-description"
+          className="w-full rounded-xl overflow-hidden shadow-lg border border-green-600"
+          style={{ minHeight: "600px" }}
+        >
           <iframe
             src="https://docs.google.com/forms/d/e/1FAIpQLSeYI-JcNW2ILA1bRSGfGCbumCh6YgD8Syr0dpORqYp97zGsFQ/viewform?embedded=true"
             width="100%"
-            style={{ minHeight: "600px" }} // altura menor
+            height="600"
             frameBorder="0"
             marginHeight={0}
             marginWidth={0}
-            className="rounded-xl shadow-xl"
+            className="block"
             title="Formulário Google"
+            loading="lazy"
           >
             Carregando…
           </iframe>
