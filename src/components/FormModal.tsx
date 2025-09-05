@@ -7,11 +7,18 @@ interface FormModalProps {
 
 const FormModal: React.FC<FormModalProps> = ({ isOpen, onClose }) => {
   const [showModal, setShowModal] = useState(false);
+  const [isInstagramWebView, setIsInstagramWebView] = useState(false);
 
   useEffect(() => {
     if (isOpen) setShowModal(true);
     else setTimeout(() => setShowModal(false), 300);
   }, [isOpen]);
+
+  useEffect(() => {
+    if (typeof navigator !== "undefined") {
+      setIsInstagramWebView(/Instagram/.test(navigator.userAgent));
+    }
+  }, []);
 
   if (!showModal) return null;
 
@@ -55,25 +62,42 @@ const FormModal: React.FC<FormModalProps> = ({ isOpen, onClose }) => {
           Formulário de Inscrição
         </h2>
 
-        {/* Iframe do Google Form */}
         <div
           id="modal-description"
-          className="w-full rounded-xl overflow-hidden shadow-lg border border-green-600"
-          style={{ minHeight: "600px" }}
+          className="w-full rounded-xl overflow-hidden shadow-lg border border-green-600 min-h-[600px] flex items-center justify-center"
         >
-          <iframe
-            src="https://docs.google.com/forms/d/e/1FAIpQLSeYI-JcNW2ILA1bRSGfGCbumCh6YgD8Syr0dpORqYp97zGsFQ/viewform?embedded=true"
-            width="100%"
-            height="600"
-            frameBorder="0"
-            marginHeight={0}
-            marginWidth={0}
-            className="block"
-            title="Formulário Google"
-            loading="lazy"
-          >
-            Carregando…
-          </iframe>
+          {isInstagramWebView ? (
+            <div className="text-center p-6">
+              <p className="mb-4 text-white">
+                O formulário não pode ser aberto aqui. Por favor, clique no botão abaixo para abrir no navegador.
+              </p>
+              <button
+                onClick={() =>
+                  window.open(
+                    "https://docs.google.com/forms/d/e/1FAIpQLSeYI-JcNW2ILA1bRSGfGCbumCh6YgD8Syr0dpORqYp97zGsFQ/viewform",
+                    "_blank"
+                  )
+                }
+                className="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg text-white font-semibold"
+              >
+                Abrir formulário no navegador
+              </button>
+            </div>
+          ) : (
+            <iframe
+              src="https://docs.google.com/forms/d/e/1FAIpQLSeYI-JcNW2ILA1bRSGfGCbumCh6YgD8Syr0dpORqYp97zGsFQ/viewform?embedded=true"
+              width="100%"
+              height="600"
+              frameBorder="0"
+              marginHeight={0}
+              marginWidth={0}
+              className="block"
+              title="Formulário Google"
+              loading="lazy"
+            >
+              Carregando…
+            </iframe>
+          )}
         </div>
       </div>
     </div>
