@@ -31,7 +31,7 @@ export const Hero = () => {
 
         {/* Content */}
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-          <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-8xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
             LANÇAMENTO
           </h1>
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-8">
